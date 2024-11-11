@@ -5,3 +5,10 @@
 - Vite
 - shadcn
 - TailwindCSS
+
+## Startup
+
+```
+npm i
+npm run dev
+```
