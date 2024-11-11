@@ -1,18 +1,19 @@
-import { Notebook } from "lucide-react";
-import { useState } from "react";
+import { z } from "zod";
+
+import useLocalStorageState from "use-local-storage-state";
 
 const DATASTORE_KEY = "my_notes_app";
 
-type Note = {
-  id: string;
-  title: string;
-  content: string;
-  createdTime: number;
-};
+export const noteSchema = z.object({
+  id: z.string().uuid(),
+  title: z.string().min(2).max(50),
+  content: z.string().min(10).max(1000),
+  createdTime: z.number(),
+});
 
-type NewNote = Omit<Note, "id" | "createdTime">;
+export type Note = z.infer<typeof noteSchema>;
 
-const defaultValues: Note[] = [
+const defaultValue: Note[] = [
   {
     id: crypto.randomUUID(),
     title: "This is my first note",
@@ -21,36 +22,43 @@ const defaultValues: Note[] = [
   },
 ];
 
-const getDatastore = (): Note[] => {
-  localStorage.setItem(DATASTORE_KEY, JSON.stringify(defaultValues));
-
-  const item = localStorage.getItem(DATASTORE_KEY);
-
-  if (!item) return [];
-
-  const parsed = JSON.parse(item) as Note[];
-
-  return parsed;
+type UseDatastoreType = {
+  datastore: Note[];
+  updateOrCreateNote: (noteValues: Note) => void;
+  getNoteById: (noteId: string) => Note | undefined;
 };
 
-const convertNewNoteToNote = (note: NewNote): Note => ({
-  ...note,
-  id: crypto.randomUUID(),
-  createdTime: Date.now(),
-});
-
-type UseDatastoreType = [Note[], (note: NewNote) => void];
-
 export const useDatastore = (): UseDatastoreType => {
-  const [datastore, setDatastore] = useState(getDatastore);
+  const [datastore, setDatastore] = useLocalStorageState(DATASTORE_KEY, {
+    defaultValue,
+  });
 
-  const addNote = (note: NewNote) => {
-    setDatastore((prev) => {
-      const newData = [...prev, convertNewNoteToNote(note)];
-      localStorage.setItem(DATASTORE_KEY, JSON.stringify(newData));
-      return newData;
-    });
+  const updateOrCreateNote = (noteValues: Note) => {
+    console.log("updateorcreate", noteValues);
+    const note = getNoteById(noteValues.id);
+
+    if (note) {
+      deleteNoteById(note.id);
+    }
+
+    const newData = [...datastore, noteValues];
+
+    setDatastore(newData);
+
+    console.log("fin");
   };
 
-  return [datastore, addNote];
+  const getNoteById = (noteId: string): Note | undefined => {
+    return datastore.find((note) => note.id === noteId);
+  };
+
+  const deleteNoteById = (noteId: string): void => {
+    const index = datastore.findIndex((note) => note.id === noteId);
+
+    datastore.splice(index, 1);
+
+    setDatastore(datastore);
+  };
+
+  return { datastore, updateOrCreateNote, getNoteById };
 };

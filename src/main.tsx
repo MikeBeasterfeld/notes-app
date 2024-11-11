@@ -5,6 +5,7 @@ import "./main.css";
 import { AddNote } from "./pages/AddNote.tsx";
 import Index from "./pages/Index.tsx";
 import { Wrapper } from "./wrapper.tsx";
+import { Note, noteLoader } from "./pages/Note.tsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,11 @@ const router = createBrowserRouter([
   {
     path: "/add",
     element: <AddNote />,
+  },
+  {
+    path: "note/:noteId",
+    element: <Note />,
+    loader: noteLoader,
   },
 ]);
 

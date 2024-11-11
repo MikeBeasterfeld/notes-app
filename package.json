@@ -27,6 +27,7 @@
     "react-router-dom": "^6.28.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
+    "use-local-storage-state": "^19.4.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
