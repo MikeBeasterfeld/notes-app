@@ -2,7 +2,6 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./main.css";
-import { AddNote } from "./pages/AddNote.tsx";
 import Index from "./pages/Index.tsx";
 import { Wrapper } from "./wrapper.tsx";
 import { Note, noteLoader } from "./pages/Note.tsx";
@@ -11,10 +10,6 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Index />,
-  },
-  {
-    path: "/add",
-    element: <AddNote />,
   },
   {
     path: "note/:noteId",
