@@ -37,9 +37,9 @@ export const NoteForm = ({ note, onSubmit, onCancel }: NoteFormProps) => {
     if (onCancel) onCancel();
   };
 
-  const onFormSubmit = async (values: Note) => {
+  const onFormSubmit = (values: Note) => {
     console.log("noteform", values);
-    await updateOrCreateNote(values);
+    updateOrCreateNote(values);
     form.reset();
     if (onSubmit) onSubmit();
   };

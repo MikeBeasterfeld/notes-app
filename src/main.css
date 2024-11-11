@@ -4,4 +4,9 @@
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --popover: 210 40% 98%;
+}
+
+.dark {
+  --popover: 222.2 84% 4.9%;
 }

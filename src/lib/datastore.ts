@@ -26,6 +26,7 @@ type UseDatastoreType = {
   datastore: Note[];
   updateOrCreateNote: (noteValues: Note) => void;
   getNoteById: (noteId: string) => Note | undefined;
+  deleteNoteById: (noteId: string) => void;
 };
 
 export const useDatastore = (): UseDatastoreType => {
@@ -60,5 +61,5 @@ export const useDatastore = (): UseDatastoreType => {
     setDatastore(datastore);
   };
 
-  return { datastore, updateOrCreateNote, getNoteById };
+  return { datastore, updateOrCreateNote, getNoteById, deleteNoteById };
 };
