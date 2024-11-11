@@ -1,12 +1,11 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
+import reactLogo from '../assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
-import { Button } from './components/ui/button/button'
-import { H1 } from './components/ui/H1'
-import { BodyText } from './components/ui/bodyText'
+import { Button } from '../components/ui/button/button'
+import { H1 } from '../components/ui/H1'
+import { BodyText } from '../components/ui/bodyText'
 
-function App() {
+function Index() {
   const [count, setCount] = useState(0)
 
   return (
@@ -37,4 +36,4 @@ function App() {
   )
 }
 
-export default App
+export default Index
